@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 10</title>
+</head>
+
+<body>
+    <h1>Завдання 10: Перевірка дужок</h1>
+    <div>
+        <label for="inputString">Enter a string: </label>
+        <input type="text" id="inputString" />
+        <button onclick="validateBrackets()">Check Brackets</button>
+    </div>
+    <div id="output"></div>
+    <script>
+        function checkBrackets(str) {
+            const stack = [];
+            const brackets = {
+                "(": ")",
+                "{": "}",
+                "[": "]",
+            };
+
+            for (const char of str) {
+                if (brackets[char]) {
+                    stack.push(char);
+                } else if (Object.values(brackets).includes(char)) {
+                    const last = stack.pop();
+                    if (brackets[last] !== char) return false;
+                }
+            }
+
+            return stack.length === 0;
+        }
+
+        function validateBrackets() {
+            const input = document.getElementById("inputString").value;
+            const output = document.getElementById("output");
+            const isValid = checkBrackets(input);
+            output.innerHTML = `<p>Result: ${isValid ? "Valid" : "Invalid"} brackets</p>`;
+        }
+    </script>
+</body>
+
+</html>

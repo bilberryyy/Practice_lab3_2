@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 9</title>
+</head>
+
+<body>
+    <h1>Завдання 9: Аналіз тегів</h1>
+    <div id="output"></div>
+    <script>
+        const tweets = [
+            { id: "000", likes: 5, tags: ["js", "nodejs"] },
+            { id: "001", likes: 2, tags: ["html", "css"] },
+            { id: "002", likes: 17, tags: ["html", "js", "nodejs"] },
+            { id: "003", likes: 8, tags: ["css", "react"] },
+            { id: "004", likes: 0, tags: ["js", "nodejs", "react"] },
+        ];
+
+        const tagCounts = tweets
+            .flatMap(({ tags }) => tags)
+            .reduce((acc, tag) => {
+                acc[tag] = (acc[tag] || 0) + 1;
+                return acc;
+            }, {});
+
+        const output = document.getElementById("output");
+        output.innerHTML = `<p>Tag Counts: ${JSON.stringify(tagCounts)}</p>`;
+    </script>
+</body>
+
+</html>

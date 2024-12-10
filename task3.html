@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 3</title>
+</head>
+
+<body>
+    <h1>Завдання 3: Сортування медикаментів</h1>
+    <div id="output"></div>
+    <script>
+        const medicines = {
+            Агалгін: new Date("2022-05-01"),
+            Ношпа: new Date("2025-07-02"),
+            Альфахолін: new Date("2024-12-21"),
+            Аспірин: new Date("2022-08-15"),
+            Аспаркам: new Date("2024-04-18"),
+        };
+
+        const validMedicines = Object.entries(medicines)
+            .filter(([name, date]) => date > new Date())
+            .sort(([, dateA], [, dateB]) => dateA - dateB)
+            .map(([name]) => name);
+
+        const output = document.getElementById("output");
+        output.innerHTML = `<p>Valid Medicines: ${validMedicines.join(", ")}</p>`;
+    </script>
+</body>
+
+</html>

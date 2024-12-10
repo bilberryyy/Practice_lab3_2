@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 5</title>
+</head>
+
+<body>
+    <h1>Завдання 5: Фрукти зі знижкою</h1>
+    <div id="output"></div>
+    <script>
+        const fruits = [
+            { name: "apple", price: 200 },
+            { name: "orange", price: 300 },
+            { name: "grapes", price: 750 },
+        ];
+
+        const discountedFruits = fruits.map((fruit, index) => ({
+            ...fruit,
+            id: index + 1,
+            price: fruit.price * 0.8,
+        }));
+
+        const output = document.getElementById("output");
+        output.innerHTML = discountedFruits
+            .map((fruit) => `<p>${fruit.name}: $${fruit.price} (ID: ${fruit.id})</p>`)
+            .join("");
+    </script>
+</body>
+
+</html>
