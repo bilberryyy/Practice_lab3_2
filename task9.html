@@ -27,7 +27,11 @@
             }, {});
 
         const output = document.getElementById("output");
-        output.innerHTML = `<p>Tag Counts: ${JSON.stringify(tagCounts)}</p>`;
+        output.innerHTML = "<h2>Підрахунок тегів:</h2>";
+
+        Object.entries(tagCounts).forEach(([tag, count]) => {
+            output.innerHTML += `<p>${tag}: ${count}</p>`;
+        });
     </script>
 </body>
 

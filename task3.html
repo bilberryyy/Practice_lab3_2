@@ -9,7 +9,18 @@
 
 <body>
     <h1>Завдання 3: Сортування медикаментів</h1>
+    <form id="medicineForm">
+        <label for="name">Назва медикаменту:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="expiryDate">Термін придатності (рррр-мм-дд):</label>
+        <input type="date" id="expiryDate" name="expiryDate" required><br><br>
+
+        <button type="submit">Додати медикамент</button>
+    </form>
+
     <div id="output"></div>
+
     <script>
         const medicines = {
             Агалгін: new Date("2022-05-01"),
@@ -19,13 +30,34 @@
             Аспаркам: new Date("2024-04-18"),
         };
 
-        const validMedicines = Object.entries(medicines)
-            .filter(([name, date]) => date > new Date())
-            .sort(([, dateA], [, dateB]) => dateA - dateB)
-            .map(([name]) => name);
+        function updateValidMedicines() {
+            const validMedicines = Object.entries(medicines)
+                .filter(([name, date]) => date > new Date()) // Фільтруємо лише дійсні медикаменти
+                .sort(([, dateA], [, dateB]) => dateA - dateB) // Сортуємо за датою придатності
+                .map(([name]) => name); // Повертаємо лише назви
 
-        const output = document.getElementById("output");
-        output.innerHTML = `<p>Valid Medicines: ${validMedicines.join(", ")}</p>`;
+            const output = document.getElementById("output");
+            output.innerHTML = `<p><strong>Дійсні медикаменти:</strong> ${validMedicines.join(", ")}</p>`;
+        }
+
+        // Ініціалізація списку
+        updateValidMedicines();
+
+        // Додаємо новий медикамент через форму
+        const form = document.getElementById("medicineForm");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+
+            const name = document.getElementById("name").value;
+            const expiryDate = new Date(document.getElementById("expiryDate").value);
+
+            if (name && expiryDate) {
+                medicines[name] = expiryDate; // Додаємо новий медикамент
+                updateValidMedicines(); // Оновлюємо список
+            }
+
+            form.reset(); // Очищаємо форму
+        });
     </script>
 </body>
 

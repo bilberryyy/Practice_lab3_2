@@ -9,24 +9,59 @@
 
 <body>
     <h1>Завдання 5: Фрукти зі знижкою</h1>
+    <form id="fruitForm">
+        <label for="name">Назва фрукта:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="price">Ціна:</label>
+        <input type="number" id="price" name="price" required><br><br>
+
+        <button type="submit">Додати фрукт</button>
+    </form>
+
     <div id="output"></div>
+
     <script>
-        const fruits = [
+        let fruits = [
             { name: "apple", price: 200 },
             { name: "orange", price: 300 },
             { name: "grapes", price: 750 },
         ];
 
-        const discountedFruits = fruits.map((fruit, index) => ({
-            ...fruit,
-            id: index + 1,
-            price: fruit.price * 0.8,
-        }));
+        function updateDiscountedFruits() {
+            const discountedFruits = fruits.map((fruit, index) => ({
+                ...fruit,
+                id: index + 1,
+                price: (fruit.price * 0.8).toFixed(2), // Знижка 20%, округлюємо до 2 знаків
+            }));
 
-        const output = document.getElementById("output");
-        output.innerHTML = discountedFruits
-            .map((fruit) => `<p>${fruit.name}: $${fruit.price} (ID: ${fruit.id})</p>`)
-            .join("");
+            const output = document.getElementById("output");
+            output.innerHTML = discountedFruits
+                .map(
+                    (fruit) =>
+                        `<p><strong>${fruit.name}</strong>: $${fruit.price} (ID: ${fruit.id})</p>`
+                )
+                .join("");
+        }
+
+        // Ініціалізація списку фруктів
+        updateDiscountedFruits();
+
+        // Обробка форми для додавання нового фрукта
+        const form = document.getElementById("fruitForm");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+
+            const name = document.getElementById("name").value;
+            const price = parseFloat(document.getElementById("price").value);
+
+            if (name && price) {
+                fruits.push({ name, price }); // Додаємо новий фрукт
+                updateDiscountedFruits(); // Оновлюємо список фруктів
+            }
+
+            form.reset(); // Очищаємо форму
+        });
     </script>
 </body>
 

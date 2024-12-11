@@ -4,30 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Завдання 1</title>
+    <title>Створення продукту</title>
 </head>
 
 <body>
-    <h1>Завдання 1: Створення продукту</h1>
+    <h1>Створення продукту</h1>
+    <form id="productForm">
+        <label for="name">Назва продукту:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="price">Ціна:</label>
+        <input type="number" id="price" name="price" required><br><br>
+
+        <label for="quantity">Кількість:</label>
+        <input type="number" id="quantity" name="quantity" required><br><br>
+
+        <button type="submit">Створити продукт</button>
+    </form>
+
     <div id="output"></div>
+
     <script>
         function createProduct(obj, callback) {
-            const product = { ...obj, id: Date.now() };
-            callback(product);
+            const product = { ...obj, id: Date.now() }; // Додаємо унікальний ID до продукту
+            callback(product); // Викликаємо функцію зворотного виклику
         }
 
         const logProduct = (product) => {
             const output = document.getElementById("output");
-            output.innerHTML += `<p>Product: ${JSON.stringify(product)}</p>`;
+            output.innerHTML += `<p><strong>Продукт:</strong> ${JSON.stringify(product)}</p>`;
         };
 
         const logTotalPrice = (product) => {
             const output = document.getElementById("output");
-            output.innerHTML += `<p>Total Price: ${product.price * product.quantity}</p>`;
+            output.innerHTML += `<p><strong>Загальна ціна:</strong> ${product.price * product.quantity} грн</p>`;
         };
 
-        createProduct({ name: "Laptop", price: 1500, quantity: 2 }, logProduct);
-        createProduct({ name: "Laptop", price: 1500, quantity: 2 }, logTotalPrice);
+        // Додаємо обробник події на форму
+        const form = document.getElementById("productForm");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+
+            const name = document.getElementById("name").value;
+            const price = parseFloat(document.getElementById("price").value);
+            const quantity = parseInt(document.getElementById("quantity").value);
+
+            createProduct({ name, price, quantity }, (product) => {
+                logProduct(product);
+                logTotalPrice(product);
+            });
+        });
     </script>
 </body>
 
